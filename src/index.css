@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid theme('colors.rust.DEFAULT');
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  /* Dotted "tear line" that separates the photo from the ticket stub */
+  .tear-line {
+    background-image: linear-gradient(to right, theme('colors.ink.DEFAULT') 50%, transparent 0);
+    background-position: bottom;
+    background-size: 10px 2px;
+    background-repeat: repeat-x;
+    opacity: 0.25;
+  }
+
+  /* Perforation notches cut into the left/right edge of a ticket stub */
+  .stub-notch::before,
+  .stub-notch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: theme('colors.paper.DEFAULT');
+    border-radius: 9999px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  .stub-notch::before {
+    left: -10px;
+  }
+  .stub-notch::after {
+    right: -10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
